@@ -11,9 +11,14 @@ namespace Reflection_1
 
         static void Main(string[] args)
         {
+            test0();
             test1();
             test2();
+            test3();
+        }
 
+        static void test0()
+        {
             Console.WriteLine("a + b + c = " + (a + b + c));
             Console.WriteLine("Please enter the name of the variable that you wish to change:");
             string varName = Console.ReadLine();
@@ -29,6 +34,7 @@ namespace Reflection_1
                     fieldInfo.SetValue(null, newInt);
                     Console.WriteLine("a + b + c = " + (a + b + c));
                 }
+
                 Console.ReadKey();
             }
         }
@@ -38,6 +44,7 @@ namespace Reflection_1
             string test = "test";
             Console.WriteLine(test.GetType().FullName);
             Console.WriteLine(typeof(Int32).FullName);
+
             Console.ReadKey();
         }
 
@@ -48,6 +55,21 @@ namespace Reflection_1
 
             foreach (Type t in assemblyTypes)
                 Console.WriteLine(t.Name);
+
+            Console.ReadKey();
+        }
+
+        static void test3()
+        {
+            Type testType = typeof(TestClass);
+            ConstructorInfo ctor = testType.GetConstructor(System.Type.EmptyTypes);
+            if (ctor != null)
+            {
+                object instance = ctor.Invoke(null);
+                MethodInfo methodInfo = testType.GetMethod("TestMethod");
+                Console.WriteLine(methodInfo.Invoke(instance, new object[] { 10 }));
+            }
+
             Console.ReadKey();
         }
     }
@@ -56,4 +78,15 @@ namespace Reflection_1
     {
         //Just here to make the output a tad less boring :)
     }
+
+    public class TestClass
+    {
+        private int testValue = 42;
+
+        public int TestMethod(int numberToAdd)
+        {
+            return this.testValue + numberToAdd;
+        }
+    }
 }
+

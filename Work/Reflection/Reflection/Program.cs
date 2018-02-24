@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reflection_2
+namespace Reflection
 {
     class Program
     {
